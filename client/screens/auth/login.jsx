@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
 			Alert.alert("Success", "Login Successful");
 			navigation.navigate("App");
 		} catch (error) {
-			console.log(error);
+			error;
 			if (error.response.status == 400) {
 				Alert.alert("Bad Request", error.response.data.message);
 			} else {

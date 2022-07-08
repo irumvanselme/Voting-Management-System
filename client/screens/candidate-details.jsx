@@ -28,8 +28,8 @@ export function CandidateDetails({ navigation, route }) {
 				return true;
 			}
 		} catch (error) {
-			console.log(error.response.data);
-			console.log("An error occured");
+			error.response.data;
+			("An error occured");
 		}
 	}
 
@@ -87,13 +87,15 @@ export function CandidateDetails({ navigation, route }) {
 			<Text size={16} styles={{ marginTop: 20 }}>
 				{item.phoneNumber}
 			</Text>
-			<View
-				style={{
-					marginTop: 30,
-				}}
-			>
-				<Button title={"Vote"} onPress={vote} />
-			</View>
+			{authUser.role != "ADMIN" && (
+				<View
+					style={{
+						marginTop: 30,
+					}}
+				>
+					<Button title={"Vote"} onPress={vote} />
+				</View>
+			)}
 		</Screen>
 	);
 }

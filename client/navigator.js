@@ -89,7 +89,13 @@ function AppNavigator({ navigation }) {
 						title: "Candidates",
 					}}
 				/>
-				<Stack.Screen name="NewCandidate" component={NewCandidate} />
+				<Stack.Screen
+					name="NewCandidate"
+					options={{
+						title: "Create A Candidate",
+					}}
+					component={NewCandidate}
+				/>
 				<Stack.Screen
 					name="CandidateDetails"
 					options={({ route }) => ({

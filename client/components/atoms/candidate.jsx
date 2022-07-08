@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { AppContext } from "../../contexts/app-context";
 import { Colors } from "../../utils/constants";
+import { backend_url, get } from "../../utils/http";
 import { Button } from "../theme/button";
 import Text from "../theme/text";
 
 export function renderCandidate(navigation, hasVoted, role) {
 	return function ({ item, index, separators }) {
-		role;
 		return (
 			<TouchableOpacity
 				onPress={() => {
@@ -35,7 +35,7 @@ export function renderCandidate(navigation, hasVoted, role) {
 						<View>
 							<Image
 								source={{
-									uri: item.profilePicture,
+									uri: `${backend_url}api/candidates/load/${item.profilePicture}`,
 								}}
 								style={{
 									width: 100,

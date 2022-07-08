@@ -29,7 +29,7 @@ export function Candidates({ navigation }) {
 			setArticles(data.data.reverse(0));
 			setIsFetching(false);
 		} catch (error) {
-			console.log("An error occured");
+			("An error occured");
 		}
 	}
 
@@ -51,8 +51,8 @@ export function Candidates({ navigation }) {
 				return true;
 			}
 		} catch (error) {
-			console.log(error.response.data);
-			console.log("An error occured");
+			error.response.data;
+			("An error occured");
 		}
 	}
 
@@ -64,9 +64,10 @@ export function Candidates({ navigation }) {
 
 	async function logOut() {
 		try {
-			await SecureStore.setItemAsync("tokne", "None");
+			// await SecureStore.setItemAsync("tokne", "None");
 			await SecureStore.deleteItemAsync("token");
 			DevSettings.reload();
+			// await navigation.navigate("Register");
 		} catch (error) {
 			error;
 			setIsFetching(false);
@@ -116,7 +117,7 @@ export function Candidates({ navigation }) {
 					bottom: 20,
 					right: 20,
 					width: 70,
-					height: 130,
+					height: authUser.role == "ADMIN" ? 200 : 130,
 					justifyContent: "space-between",
 					alignItems: "center",
 				}}
@@ -146,8 +147,8 @@ export function Candidates({ navigation }) {
 				<View
 					style={{
 						backgroundColor: Colors.primary,
-						width: 70,
-						height: 70,
+						width: authUser.role == "ADMIN" ? 60 : 70,
+						height: authUser.role == "ADMIN" ? 60 : 70,
 						borderRadius: 35,
 						right: 0,
 						zIndex: 1,
@@ -167,6 +168,33 @@ export function Candidates({ navigation }) {
 						<Feather name="user" size={24} color="white" />
 					</TouchableOpacity>
 				</View>
+
+				{authUser.role == "ADMIN" && (
+					<View
+						style={{
+							backgroundColor: Colors.primary,
+							width: 70,
+							height: 70,
+							borderRadius: 35,
+							right: 0,
+							zIndex: 1,
+							elevation: 10,
+						}}
+					>
+						<TouchableOpacity
+							onPress={() => {
+								navigation.navigate("NewCandidate");
+							}}
+							style={{
+								flex: 1,
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						>
+							<Feather name="plus" size={24} color="white" />
+						</TouchableOpacity>
+					</View>
+				)}
 			</View>
 		</Screen>
 	);
