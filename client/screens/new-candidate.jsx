@@ -5,7 +5,9 @@ import Text from "../components/theme/text";
 import { Screen } from "../layouts/screen";
 import { useState } from "react";
 import { validate } from "../utils/validator";
-import { post } from "../utils/http";
+import { post, put } from "../utils/http";
+
+import * as ImagePicker from "expo-image-picker";
 
 export function NewCandidate({ navigation }) {
 	const [fullNames, setFullNames] = useState("");
@@ -13,6 +15,8 @@ export function NewCandidate({ navigation }) {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [profilePicture, setProfilePicture] = useState("");
 	const [missionStatement, setMissionStatement] = useState("");
+
+	const [image, setImage] = useState(null);
 
 	async function createCandidate() {
 		let data = {
@@ -27,7 +31,6 @@ export function NewCandidate({ navigation }) {
 			fullNames: "required|string|min:2",
 			nationalId: "required|string|min:16|max:16",
 			phoneNumber: "required|min:9",
-			profilePicture: "required",
 			missionStatement: "required|string",
 		});
 
@@ -40,12 +43,49 @@ export function NewCandidate({ navigation }) {
 			let res = await post("api/candidates", data);
 
 			if (res.status == 202) {
+				var uploadData = new FormData();
+				uploadData.append("diploma", image);
+
+				let uploadRes = await put(
+					`api/candidates/${res.data.id}/change-profile`,
+					uploadData
+				);
+
+				console.log(uploadRes.data);
+
 				Alert.alert("Success", "Candidate created successfully");
 				navigation.navigate("Candidates");
 			} else {
 				Alert.alert("Bad Request", "Check if your fields are valid");
 			}
 		} catch (error) {}
+	}
+
+	async function pickImage() {
+		// No permissions request is necessary for launching the image library
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [5, 5],
+			quality: 1,
+		});
+
+		console.log(result);
+
+		if (!result.cancelled) {
+			let localUri = result.uri;
+			let filename = localUri.split("/").pop();
+
+			// Infer the type of the image
+			let match = /\.(\w+)$/.exec(filename);
+			let type = match ? `image/${match[1]}` : `image`;
+
+			setImage({
+				type: type,
+				uri: result.uri,
+				name: filename,
+			});
+		}
 	}
 
 	return (
@@ -55,10 +95,6 @@ export function NewCandidate({ navigation }) {
 					<Input label="Candidate names" handler={setFullNames} />
 					<Input label="National Id" handler={setNationalId} />
 					<Input label="Phone number" handler={setPhoneNumber} />
-					<Input
-						label="Profile Picture"
-						handler={setProfilePicture}
-					/>
 
 					<Input
 						textarea
@@ -66,6 +102,7 @@ export function NewCandidate({ navigation }) {
 						height={200}
 						handler={setMissionStatement}
 					/>
+					<Button title={"Upload an image"} onPress={pickImage} />
 					<View
 						style={{
 							marginTop: 20,

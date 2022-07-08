@@ -9,8 +9,6 @@ export const backend_url = `http://${ip_address}:8000/`;
 export async function get(url, options) {
 	let token = await SecureStore.getItemAsync("token");
 
-	console.log(token);
-
 	let res = await axios.get(`http://${ip_address}:8000/${url}`, {
 		headers: {
 			Authorization: "Bearer " + token,
@@ -23,6 +21,18 @@ export async function post(url, data) {
 	let token = await SecureStore.getItemAsync("token");
 
 	let res = await axios.post(`http://${ip_address}:8000/${url}`, data, {
+		headers: {
+			Authorization: "Bearer " + token,
+		},
+	});
+
+	return res;
+}
+
+export async function put(url, data) {
+	let token = await SecureStore.getItemAsync("token");
+
+	let res = await axios.putForm(`http://${ip_address}:8000/${url}`, data, {
 		headers: {
 			Authorization: "Bearer " + token,
 		},
