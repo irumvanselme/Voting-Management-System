@@ -25,6 +25,8 @@ public class Candidate {
 
     private String nationalId;
 
+    private String gender;
+
     private String profilePicture;
 
     private String missionStatement;

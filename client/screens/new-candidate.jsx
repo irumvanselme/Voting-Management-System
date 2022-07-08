@@ -7,11 +7,15 @@ import { useState } from "react";
 import { validate } from "../utils/validator";
 import { post, put } from "../utils/http";
 
+import { Picker } from "@react-native-picker/picker";
+
 import * as ImagePicker from "expo-image-picker";
+import { Colors } from "../utils/constants";
 
 export function NewCandidate({ navigation }) {
 	const [fullNames, setFullNames] = useState("");
 	const [nationalId, setNationalId] = useState("");
+	const [gender, setGender] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [profilePicture, setProfilePicture] = useState("");
 	const [missionStatement, setMissionStatement] = useState("");
@@ -23,6 +27,7 @@ export function NewCandidate({ navigation }) {
 			fullNames,
 			nationalId,
 			phoneNumber,
+			gender,
 			profilePicture,
 			missionStatement,
 		};
@@ -31,6 +36,7 @@ export function NewCandidate({ navigation }) {
 			fullNames: "required|string|min:2",
 			nationalId: "required|string|min:16|max:16",
 			phoneNumber: "required|min:9",
+			gender: "required|string|in:MALE,FEMALE",
 			missionStatement: "required|string",
 		});
 
@@ -95,6 +101,36 @@ export function NewCandidate({ navigation }) {
 					<Input label="Candidate names" handler={setFullNames} />
 					<Input label="National Id" handler={setNationalId} />
 					<Input label="Phone number" handler={setPhoneNumber} />
+
+					<Text
+						styles={{
+							marginTop: 10,
+						}}
+					>
+						gender
+					</Text>
+					<View
+						style={{
+							// paddingVertical: 5,
+							paddingHorizontal: 10,
+							borderWidth: 2,
+							borderRadius: 2,
+							marginBottom: 10,
+							color: Colors.text,
+							// paddingTop: 10,
+							borderColor: "#aaa",
+						}}
+					>
+						<Picker
+							selectedValue={gender}
+							onValueChange={(itemValue, itemIndex) =>
+								setGender(itemValue)
+							}
+						>
+							<Picker.Item label="MALE" value="MALE" />
+							<Picker.Item label="FEMALE" value="FEMALE" />
+						</Picker>
+					</View>
 
 					<Input
 						textarea
