@@ -7,7 +7,7 @@ import { useState } from "react";
 import { validate } from "../utils/validator";
 import { post } from "../utils/http";
 
-export default function NewArticle({ navigation }) {
+export function NewCandidate({ navigation }) {
 	const [title, setTitle] = useState("");
 	const [body, setBody] = useState("");
 	const [summary, setSummary] = useState("");
@@ -30,7 +30,7 @@ export default function NewArticle({ navigation }) {
 			let res = await post("api/articles", data);
 
 			if (res.status == 201) {
-				Alert.alert("Success", "Article created successfully");
+				Alert.alert("Success", "candidate created successfully");
 				navigation.navigate("App");
 			} else {
 				Alert.alert("Bad Request", "Check if your fields are valid");
@@ -42,19 +42,22 @@ export default function NewArticle({ navigation }) {
 		<Screen>
 			<ScrollView>
 				<View style={{ marginTop: 20 }}>
-					<Input label="Article title" handler={setTitle} />
+					<Input label="candidate title" handler={setTitle} />
 					<Input
 						textarea
-						label="Article Summary"
+						label="candidate Summary"
 						handler={setSummary}
 					/>
 					<Input
 						textarea
-						label="Article Body"
+						label="candidate Body"
 						height={200}
 						handler={setBody}
 					/>
-					<Button title={"Create Article"} onPress={createArticle} />
+					<Button
+						title={"Create Candidate"}
+						onPress={createArticle}
+					/>
 				</View>
 			</ScrollView>
 		</Screen>

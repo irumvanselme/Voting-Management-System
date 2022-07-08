@@ -3,19 +3,19 @@ import {
 	CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { Text, View } from "react-native";
-import ArticleDetails from "./screens/article-details";
-import { Articles } from "./screens/articles";
 
 import { Ionicons } from "@expo/vector-icons";
 import LoginScreen from "./screens/auth/login";
 import RegisterScreen from "./screens/auth/register";
 import React, { useContext } from "react";
 import { AppContext } from "./contexts/app-context";
-import NewArticle from "./screens/new-article";
 import { LoadingScreen } from "./screens/loading";
 import { Profile } from "./screens/profile";
 import { Colors } from "./utils/constants";
 import { StatusBar } from "expo-status-bar";
+import { NewCandidate } from "./screens/new-candidate";
+import { CandidateDetails } from "./screens/candidate-details";
+import { Candidates } from "./screens/candidates";
 
 export const RootNavigator = () => {
 	const { isLoggedIn } = useContext(AppContext);
@@ -82,21 +82,21 @@ function AppNavigator({ navigation }) {
 				}}
 			>
 				<Stack.Screen
-					name="Articles"
-					component={Articles}
+					name="Candidates"
+					component={Candidates}
 					options={{
 						headerLeft: null,
 						gestureEnabled: false,
 						title: "Candidates",
 					}}
 				/>
-				<Stack.Screen name="NewArticle" component={NewArticle} />
+				<Stack.Screen name="NewCandidate" component={NewCandidate} />
 				<Stack.Screen
-					name="ArticleDetails"
+					name="CandidateDetails"
 					options={({ route }) => ({
 						title: `Vote for ${route.params.item.fullNames}`,
 					})}
-					component={ArticleDetails}
+					component={CandidateDetails}
 				/>
 				<Stack.Screen name="Profile" component={Profile} />
 			</Stack.Navigator>

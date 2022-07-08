@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/app-context";
 import { get, post } from "../utils/http";
 
-export default function ArticleDetails({ navigation, route }) {
+export function CandidateDetails({ navigation, route }) {
 	let item = route.params.item;
 	const [hasVoted_, setHasVoted] = useState(false);
 
@@ -35,7 +35,7 @@ export default function ArticleDetails({ navigation, route }) {
 					"Success",
 					"You have succesfully voted " + item.fullNames
 				);
-				navigation.navigate("Articles");
+				navigation.navigate("Candidates");
 			}
 		} catch (error) {
 			console.log(error.response.data);

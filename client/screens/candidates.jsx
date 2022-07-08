@@ -6,7 +6,6 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import { renderArticle } from "../components/atoms/article";
 import Text from "../components/theme/text";
 import { Screen } from "../layouts/screen";
 import { get } from "../utils/http";
@@ -15,8 +14,9 @@ import { MaterialIcons, Feather, AntDesign } from "@expo/vector-icons";
 import { Colors } from "../utils/constants";
 import * as SecureStore from "expo-secure-store";
 import { AppContext } from "../contexts/app-context";
+import { renderCandidate } from "../components/atoms/candidate";
 
-export function Articles({ navigation }) {
+export function Candidates({ navigation }) {
 	const [articles, setArticles] = useState([]);
 	const [isFetching, setIsFetching] = useState(false);
 
@@ -77,7 +77,7 @@ export function Articles({ navigation }) {
 						style={{ height: 40 }}
 						showsVerticalScrollIndicator={false}
 						data={articles}
-						renderItem={renderArticle(navigation, hasVoted_)}
+						renderItem={renderCandidate(navigation, hasVoted_)}
 						onRefresh={getArticles}
 						ListFooterComponent={() => (
 							<View

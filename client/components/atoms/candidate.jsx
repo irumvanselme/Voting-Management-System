@@ -3,12 +3,12 @@ import { Colors } from "../../utils/constants";
 import { Button } from "../theme/button";
 import Text from "../theme/text";
 
-export function renderArticle(navigation, hasVoted) {
+export function renderCandidate(navigation, hasVoted) {
 	return function ({ item, index, separators }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate("ArticleDetails", {
+					navigation.navigate("CandidateDetails", {
 						item,
 					});
 				}}
@@ -66,7 +66,7 @@ export function renderArticle(navigation, hasVoted) {
 					<Button
 						title={"More Details"}
 						onPress={() => {
-							navigation.navigate("ArticleDetails", {
+							navigation.navigate("CandidateDetails", {
 								item,
 							});
 						}}
