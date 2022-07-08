@@ -11,19 +11,23 @@ import { validate } from "../../utils/validator";
 
 export default function RegisterScreen({ navigation }) {
 	const [names, setFullNames] = useState("");
-	const [username, setUsername] = useState("");
+	const [phoneNumber, setUsername] = useState("");
 	const [email, setEmail] = useState("");
+	const [nationalId, setNationalId] = useState("");
 	const [password, setPassword] = useState("");
 
 	async function register() {
-		let data = { names, username, email, password };
+		let data = { names, phoneNumber, nationalId, email, password };
 
 		let [passes, info] = validate(data, {
 			names: "required",
-			username: "required",
 			email: "required|email",
+			phoneNumber: "required|string|min:9",
+			nationalId: "required|string|min:16|max:16",
 			password: "required",
 		});
+
+		data.fullNames = data.names;
 
 		if (!passes) {
 			Alert.alert("Bad Request", info[0][0]);
@@ -55,7 +59,8 @@ export default function RegisterScreen({ navigation }) {
 			<View style={{ marginTop: 30 }}>
 				<Input label="Full names" handler={setFullNames} />
 				<Input label="Email" handler={setEmail} />
-				<Input label="username" handler={setUsername} />
+				<Input label="phoneNumber" handler={setUsername} />
+				<Input label="National Id" handler={setNationalId} />
 				<Input label="Password" handler={setPassword} password />
 			</View>
 			<Button title="Create" onPress={register} />
