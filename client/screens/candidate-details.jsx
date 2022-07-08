@@ -91,9 +91,9 @@ export function CandidateDetails({ navigation, route }) {
 			<Text size={16}>{item.missionStatement}</Text>
 
 			<Text styles={{ marginTop: 10, textDecorationLine: "underline" }}>
-				Phone Number
+				Gender
 			</Text>
-			<Text size={16}>{item.phoneNumber}</Text>
+			<Text size={16}>{item.gender}</Text>
 
 			<Text styles={{ marginTop: 10, textDecorationLine: "underline" }}>
 				Nataional Id

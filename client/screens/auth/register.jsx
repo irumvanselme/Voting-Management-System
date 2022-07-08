@@ -42,7 +42,8 @@ export default function RegisterScreen({ navigation }) {
 			navigation.navigate("Login");
 		} catch (error) {
 			error.response.data;
-			Alert.alert(error.response.data, "User Already Registered");
+			console.log(error.response.data);
+			Alert.alert(error.response.data.message, "User Already Registered");
 		}
 	}
 
