@@ -35,7 +35,7 @@ function AuthNavigator() {
 				cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 			}}
 		>
-			<AuthStack.Screen name="Loading" component={LoadingScreen} />
+			{/* <AuthStack.Screen name="Loading" component={LoadingScreen} /> */}
 			<AuthStack.Screen name="Login" component={LoginScreen} />
 			<AuthStack.Screen name="Register" component={RegisterScreen} />
 			<AuthStack.Screen
@@ -54,7 +54,6 @@ const Stack = createStackNavigator();
 
 function AppNavigator({ navigation }) {
 	navigation.addListener("beforeRemove", (e) => {
-		// console.log("Yello no thing 1");
 		e.preventDefault();
 	});
 

@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
+import { AppContext } from "../../contexts/app-context";
 import { Colors } from "../../utils/constants";
 import { Button } from "../theme/button";
 import Text from "../theme/text";
 
-export function renderCandidate(navigation, hasVoted) {
+export function renderCandidate(navigation, hasVoted, role) {
 	return function ({ item, index, separators }) {
+		role;
 		return (
 			<TouchableOpacity
 				onPress={() => {
@@ -45,33 +48,34 @@ export function renderCandidate(navigation, hasVoted) {
 								paddingLeft: 20,
 							}}
 						>
-							<Text bold>{item.fullNames}</Text>
 							<Text
+								bold
+								size={20}
 								styles={{
-									marginTop: 20,
+									paddingBottom: 20,
 								}}
 							>
-								Phone number
+								{item.fullNames}
 							</Text>
-							<Text size={15} medium color={Colors.primary}>
-								{item.phoneNumber}
-							</Text>
+
 							{hasVoted && (
 								<Text>Total Votes: {item.totalVotes}</Text>
 							)}
 						</View>
 					</View>
 				</View>
-				<View style={{ marginTop: 20 }}>
-					<Button
-						title={"More Details"}
-						onPress={() => {
-							navigation.navigate("CandidateDetails", {
-								item,
-							});
-						}}
-					/>
-				</View>
+				{role == "VOTER" && (
+					<View style={{ marginTop: 20 }}>
+						<Button
+							title={"More Details"}
+							onPress={() => {
+								navigation.navigate("CandidateDetails", {
+									item,
+								});
+							}}
+						/>
+					</View>
+				)}
 			</TouchableOpacity>
 		);
 	};

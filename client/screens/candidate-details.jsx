@@ -19,9 +19,18 @@ export function CandidateDetails({ navigation, route }) {
 	}, []);
 
 	async function hasVoted() {
-		let res = await get("api/voters/" + authUser.id + "/has-voted");
+		try {
+			if (authUser != undefined && authUser.role != "ADMIN") {
+				let res = await get("api/voters/" + authUser.id + "/has-voted");
 
-		return res.data == true;
+				return res.data == true;
+			} else {
+				return true;
+			}
+		} catch (error) {
+			console.log(error.response.data);
+			console.log("An error occured");
+		}
 	}
 
 	const vote = async () => {
@@ -38,7 +47,7 @@ export function CandidateDetails({ navigation, route }) {
 				navigation.navigate("Candidates");
 			}
 		} catch (error) {
-			console.log(error.response.data);
+			error.response.data;
 			Alert.alert("An error occured");
 		}
 	};

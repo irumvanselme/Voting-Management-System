@@ -10,31 +10,35 @@ const AppProvider = ({ children }) => {
 
 	const [isLoading, setIsLoading] = useState(true);
 
-	useEffect(() => {
-		(async function () {
-			try {
-				let token = await SecureStore.getItemAsync("token");
-				if (token) {
-					let user = await get("api/auth/profile", {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					});
+	// const loadAuthed = async () => {
+	// 	try {
+	// 		let token = await SecureStore.getItemAsync("token");
+	// 		if (token) {
+	// 			let user = await get("api/auth/profile", {
+	// 				headers: {
+	// 					Authorization: `Bearer ${token}`,
+	// 				},
+	// 			});
 
-					setAuthUser(user.data);
-					setIsLoggedIn(true);
-				} else {
-					setIsLoggedIn(false);
-					setAuthUser({});
-				}
-				setIsLoading(false);
-			} catch (error) {
-				setIsLoggedIn(false);
-				setAuthUser({});
-				setIsLoading(false);
-			}
-		})();
-	}, []);
+	// 			setAuthUser(user.data.role);
+	// 			setIsLoggedIn(true);
+	// 		} else {
+	// 			setIsLoggedIn(false);
+	// 			setAuthUser({});
+	// 		}
+	// 		setIsLoading(false);
+	// 	} catch (error) {
+	// 		setIsLoggedIn(false);
+	// 		setAuthUser({});
+	// 		setIsLoading(false);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	(async function () {
+	// 		await loadAuthed();
+	// 	})();
+	// }, []);
 
 	return (
 		<AppContext.Provider

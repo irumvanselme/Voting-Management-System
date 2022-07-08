@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {
+	DevSettings,
 	FlatList,
 	SafeAreaView,
 	ScrollView,
@@ -21,11 +22,15 @@ export function Candidates({ navigation }) {
 	const [isFetching, setIsFetching] = useState(false);
 
 	async function getArticles() {
-		setIsFetching(true);
-		let data = await get("api/candidates");
+		try {
+			setIsFetching(true);
+			let data = await get("api/candidates");
 
-		setArticles(data.data.reverse(0));
-		setIsFetching(false);
+			setArticles(data.data.reverse(0));
+			setIsFetching(false);
+		} catch (error) {
+			console.log("An error occured");
+		}
 	}
 
 	useEffect(() => {
@@ -37,9 +42,18 @@ export function Candidates({ navigation }) {
 	const { authUser } = useContext(AppContext);
 
 	async function hasVoted() {
-		let res = await get("api/voters/" + authUser.id + "/has-voted");
+		try {
+			if (authUser != undefined && authUser.role != "ADMIN") {
+				let res = await get("api/voters/" + authUser.id + "/has-voted");
 
-		return res.data == true;
+				return res.data == true;
+			} else {
+				return true;
+			}
+		} catch (error) {
+			console.log(error.response.data);
+			console.log("An error occured");
+		}
 	}
 
 	useEffect(() => {
@@ -50,11 +64,11 @@ export function Candidates({ navigation }) {
 
 	async function logOut() {
 		try {
-			console.log("Logging out");
+			await SecureStore.setItemAsync("tokne", "None");
 			await SecureStore.deleteItemAsync("token");
-			navigation.push("Login");
+			DevSettings.reload();
 		} catch (error) {
-			console.log(error);
+			error;
 			setIsFetching(false);
 		}
 	}
@@ -77,7 +91,11 @@ export function Candidates({ navigation }) {
 						style={{ height: 40 }}
 						showsVerticalScrollIndicator={false}
 						data={articles}
-						renderItem={renderCandidate(navigation, hasVoted_)}
+						renderItem={renderCandidate(
+							navigation,
+							hasVoted_,
+							authUser.role
+						)}
 						onRefresh={getArticles}
 						ListFooterComponent={() => (
 							<View
