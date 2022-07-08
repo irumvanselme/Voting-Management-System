@@ -16,7 +16,6 @@ export function NewCandidate({ navigation }) {
 	const [fullNames, setFullNames] = useState("");
 	const [nationalId, setNationalId] = useState("");
 	const [gender, setGender] = useState("");
-	const [phoneNumber, setPhoneNumber] = useState("");
 	const [profilePicture, setProfilePicture] = useState("");
 	const [missionStatement, setMissionStatement] = useState("");
 
@@ -26,7 +25,6 @@ export function NewCandidate({ navigation }) {
 		let data = {
 			fullNames,
 			nationalId,
-			phoneNumber,
 			gender,
 			profilePicture,
 			missionStatement,
@@ -35,7 +33,7 @@ export function NewCandidate({ navigation }) {
 		let [passes, info] = validate(data, {
 			fullNames: "required|string|min:2",
 			nationalId: "required|string|min:16|max:16",
-			phoneNumber: "required|min:9",
+
 			gender: "required|string|in:MALE,FEMALE",
 			missionStatement: "required|string",
 		});
@@ -100,7 +98,6 @@ export function NewCandidate({ navigation }) {
 				<View style={{ marginTop: 20 }}>
 					<Input label="Candidate names" handler={setFullNames} />
 					<Input label="National Id" handler={setNationalId} />
-					<Input label="Phone number" handler={setPhoneNumber} />
 
 					<Text
 						styles={{
