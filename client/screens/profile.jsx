@@ -58,6 +58,17 @@ export function Profile() {
 				Role :{"           "}
 				{authUser.role}
 			</Text>
+
+			{authUser.candidate != null && (
+				<Text
+					styles={{
+						marginTop: 10,
+					}}
+				>
+					Candidate You have chosed :{"        \n"}
+					{authUser.candidate.fullNames}
+				</Text>
+			)}
 		</View>
 	);
 }

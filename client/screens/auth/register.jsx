@@ -14,16 +14,14 @@ export default function RegisterScreen({ navigation }) {
 	const [phoneNumber, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [nationalId, setNationalId] = useState("");
-	const [address, setAddress] = useState("");
 	const [password, setPassword] = useState("");
 
 	async function register() {
-		let data = { names, phoneNumber, address, nationalId, email, password };
+		let data = { names, phoneNumber, nationalId, email, password };
 
 		let [passes, info] = validate(data, {
 			names: "required",
 			email: "required|email",
-			address: "required|string",
 			phoneNumber: "required|string|min:9",
 			nationalId: "required|string|min:16|max:16",
 			password: "required",
@@ -69,7 +67,6 @@ export default function RegisterScreen({ navigation }) {
 					<Input label="Full names" handler={setFullNames} />
 					<Input label="Email" handler={setEmail} />
 					<Input label="Phone Number" handler={setUsername} />
-					<Input label="Address" handler={setAddress} />
 					<Input label="National Id" handler={setNationalId} />
 					<Input label="Password" handler={setPassword} password />
 				</View>

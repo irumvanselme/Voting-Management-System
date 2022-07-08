@@ -1,5 +1,6 @@
 package rw.ac.rca.nat2022.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import rw.ac.rca.nat2022.server.models.enums.ERole;
@@ -29,6 +30,7 @@ public class User {
     @Column(unique = true)
     private String nationalId;
 
+    @JsonIgnore
     private String password;
 
     private String address;

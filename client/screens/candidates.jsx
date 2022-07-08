@@ -20,6 +20,7 @@ import { renderCandidate } from "../components/atoms/candidate";
 export function Candidates({ navigation }) {
 	const [articles, setArticles] = useState([]);
 	const [isFetching, setIsFetching] = useState(false);
+	const [hasVoted_, setHasVoted] = useState(false);
 
 	async function getArticles() {
 		try {
@@ -27,6 +28,9 @@ export function Candidates({ navigation }) {
 			let data = await get("api/candidates");
 
 			setArticles(data.data.reverse(0));
+
+			await hasVoted();
+
 			setIsFetching(false);
 		} catch (error) {
 			("An error occured");
@@ -37,8 +41,6 @@ export function Candidates({ navigation }) {
 		getArticles();
 	}, []);
 
-	const [hasVoted_, setHasVoted] = useState(false);
-
 	const { authUser } = useContext(AppContext);
 
 	async function hasVoted() {
@@ -46,6 +48,7 @@ export function Candidates({ navigation }) {
 			if (authUser != undefined && authUser.role != "ADMIN") {
 				let res = await get("api/voters/" + authUser.id + "/has-voted");
 
+				setHasVoted(res.data == true);
 				return res.data == true;
 			} else {
 				return true;

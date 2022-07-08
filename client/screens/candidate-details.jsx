@@ -105,14 +105,7 @@ export function CandidateDetails({ navigation, route }) {
 						marginTop: 30,
 					}}
 				>
-					<Button
-						disabled={authUser.candidate !== null}
-						title={
-							"Vote " +
-							(authUser.candidate != null && "[Done Already]")
-						}
-						onPress={vote}
-					/>
+					<Button title={"Vote "} onPress={vote} />
 				</View>
 			)}
 		</Screen>
