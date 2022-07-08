@@ -1,0 +1,161 @@
+import { useEffect, useState } from "react";
+import {
+	FlatList,
+	SafeAreaView,
+	ScrollView,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import { renderArticle } from "../components/atoms/article";
+import Text from "../components/theme/text";
+import { Screen } from "../layouts/screen";
+import { get } from "../utils/http";
+
+import { MaterialIcons, Feather, AntDesign } from "@expo/vector-icons";
+import { Colors } from "../utils/constants";
+import * as SecureStore from "expo-secure-store";
+
+export function Articles({ navigation }) {
+	const [articles, setArticles] = useState([]);
+	const [isFetching, setIsFetching] = useState(false);
+
+	async function getArticles() {
+		setIsFetching(true);
+		let data = await get("api/articles");
+
+		setArticles(data.data.reverse(0));
+		setIsFetching(false);
+	}
+
+	useEffect(() => {
+		getArticles();
+	}, []);
+
+	async function logOut() {
+		try {
+			console.log("Logging out");
+			await SecureStore.deleteItemAsync("token");
+			navigation.push("Login");
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	return (
+		<Screen full={false}>
+			<View
+				style={{
+					flex: 1,
+					flexGrow: 1,
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+					}}
+				>
+					<FlatList
+						refreshing={isFetching}
+						style={{ height: 40 }}
+						showsVerticalScrollIndicator={false}
+						data={articles}
+						renderItem={renderArticle(navigation)}
+						onRefresh={getArticles}
+						ListFooterComponent={() => (
+							<View
+								style={{
+									height: 70,
+									justifyContent: "center",
+								}}
+							>
+								<Text align="center">No more articles</Text>
+							</View>
+						)}
+					/>
+				</View>
+			</View>
+			<View
+				style={{
+					position: "absolute",
+					bottom: 20,
+					right: 20,
+					width: 70,
+					height: 180,
+					justifyContent: "space-between",
+					alignItems: "center",
+				}}
+			>
+				<View
+					style={{
+						backgroundColor: Colors.primary,
+						width: 40,
+						height: 40,
+						borderRadius: 25,
+						right: 0,
+						zIndex: 1,
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity
+						onPress={logOut}
+						style={{
+							flex: 1,
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<AntDesign name="logout" size={20} color="white" />
+					</TouchableOpacity>
+				</View>
+				<View
+					style={{
+						backgroundColor: Colors.primary,
+						width: 50,
+						height: 50,
+						borderRadius: 25,
+						right: 0,
+						zIndex: 1,
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity
+						onPress={() => {
+							navigation.navigate("Profile");
+						}}
+						style={{
+							flex: 1,
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<Feather name="user" size={24} color="white" />
+					</TouchableOpacity>
+				</View>
+				<View
+					style={{
+						backgroundColor: Colors.primary,
+						width: 70,
+						height: 70,
+						borderRadius: 35,
+						right: 0,
+						zIndex: 1,
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity
+						onPress={() => {
+							navigation.navigate("NewArticle");
+						}}
+						style={{
+							flex: 1,
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<MaterialIcons name="add" size={30} color="white" />
+					</TouchableOpacity>
+				</View>
+			</View>
+		</Screen>
+	);
+}
