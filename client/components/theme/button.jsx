@@ -2,7 +2,12 @@ import { TouchableOpacity, View } from "react-native";
 import { Colors } from "../../utils/constants";
 import Typo from "./text";
 
-export function Button({ title, color = Colors.primary, onPress }) {
+export function Button({
+	title,
+	color = Colors.primary,
+	onPress,
+	disabled = false,
+}) {
 	return (
 		<TouchableOpacity
 			onPress={onPress}
@@ -11,6 +16,7 @@ export function Button({ title, color = Colors.primary, onPress }) {
 				elevation: 10,
 				marginVertical: 10,
 			}}
+			disabled={disabled}
 		>
 			<View
 				style={{

@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
-import { View } from "react-native";
-import Text from "../components/theme/text";
+import { Text, View } from "react-native";
 import { AppContext } from "../contexts/app-context";
 
 export function LoadingScreen({ navigation }) {
@@ -21,6 +20,13 @@ export function LoadingScreen({ navigation }) {
 				alignItems: "center",
 			}}
 		>
+			<Text
+				style={{
+					textDecorationColor: "red",
+				}}
+			>
+				sd
+			</Text>
 			<Text>Loading ...</Text>
 		</View>
 	);

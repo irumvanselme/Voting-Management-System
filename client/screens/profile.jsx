@@ -14,7 +14,7 @@ export function Profile() {
 			}}
 		>
 			<Text size={25} bold>
-				{authUser.fullNames}
+				names: {authUser.fullNames}
 			</Text>
 			<Text
 				size={20}
@@ -22,6 +22,7 @@ export function Profile() {
 					marginTop: 10,
 				}}
 			>
+				email:{"        "}
 				{authUser.email}
 			</Text>
 			<Text
@@ -29,13 +30,32 @@ export function Profile() {
 					marginTop: 10,
 				}}
 			>
-				{authUser.username}
+				address:{"         "}
+				{authUser.address}
+			</Text>
+
+			<Text
+				styles={{
+					marginTop: 10,
+				}}
+			>
+				Phone number: {authUser.phoneNumber}
+			</Text>
+
+			<Text
+				styles={{
+					marginTop: 10,
+				}}
+			>
+				Nat ID:{"           "}
+				{authUser.nationalId}
 			</Text>
 			<Text
 				styles={{
 					marginTop: 10,
 				}}
 			>
+				Role :{"           "}
 				{authUser.role}
 			</Text>
 		</View>

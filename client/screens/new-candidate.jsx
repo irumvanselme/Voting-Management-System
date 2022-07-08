@@ -51,7 +51,7 @@ export function NewCandidate({ navigation }) {
 					uploadData
 				);
 
-				console.log(uploadRes.data);
+				uploadRes.data;
 
 				Alert.alert("Success", "Candidate created successfully");
 				navigation.navigate("Candidates");
@@ -70,7 +70,7 @@ export function NewCandidate({ navigation }) {
 			quality: 1,
 		});
 
-		console.log(result);
+		result;
 
 		if (!result.cancelled) {
 			let localUri = result.uri;

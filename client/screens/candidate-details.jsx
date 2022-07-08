@@ -4,7 +4,7 @@ import Text from "../components/theme/text";
 import { Screen } from "../layouts/screen";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/app-context";
-import { get, post } from "../utils/http";
+import { backend_url, get, post } from "../utils/http";
 
 export function CandidateDetails({ navigation, route }) {
 	let item = route.params.item;
@@ -52,12 +52,14 @@ export function CandidateDetails({ navigation, route }) {
 		}
 	};
 
+	console.log(authUser.candidate);
+
 	return (
 		<Screen>
 			<View>
 				<Image
 					source={{
-						uri: item.profilePicture,
+						uri: `${backend_url}api/candidates/load/${item.profilePicture}`,
 					}}
 					style={{
 						width: "100%",
@@ -73,27 +75,44 @@ export function CandidateDetails({ navigation, route }) {
 				{hasVoted_ && <Text>Total Votes: {item.totalVotes}</Text>}
 			</View>
 			<Text
-				size={20}
-				bold
 				styles={{
-					marginTop: 40,
+					marginTop: 20,
+					textDecorationLine: "underline",
 				}}
 			>
+				Full names
+			</Text>
+			<Text size={20} bold>
 				{item.fullNames}
 			</Text>
-			<Text size={16} styles={{ marginTop: 20 }}>
-				{item.missionStatement}
+			<Text styles={{ marginTop: 10, textDecorationLine: "underline" }}>
+				Mission Statement
 			</Text>
-			<Text size={16} styles={{ marginTop: 20 }}>
-				{item.phoneNumber}
+			<Text size={16}>{item.missionStatement}</Text>
+
+			<Text styles={{ marginTop: 10, textDecorationLine: "underline" }}>
+				Phone Number
 			</Text>
+			<Text size={16}>{item.phoneNumber}</Text>
+
+			<Text styles={{ marginTop: 10, textDecorationLine: "underline" }}>
+				Nataional Id
+			</Text>
+			<Text size={16}>{item.nationalId}</Text>
 			{authUser.role != "ADMIN" && (
 				<View
 					style={{
 						marginTop: 30,
 					}}
 				>
-					<Button title={"Vote"} onPress={vote} />
+					<Button
+						disabled={authUser.candidate !== null}
+						title={
+							"Vote " +
+							(authUser.candidate != null && "[Done Already]")
+						}
+						onPress={vote}
+					/>
 				</View>
 			)}
 		</Screen>

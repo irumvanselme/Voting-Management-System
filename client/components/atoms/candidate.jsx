@@ -5,6 +5,7 @@ import Text from "../theme/text";
 
 export function renderCandidate(navigation, hasVoted, role) {
 	return function ({ item, index, separators }) {
+		hasVoted;
 		return (
 			<TouchableOpacity
 				onPress={() => {
@@ -49,10 +50,25 @@ export function renderCandidate(navigation, hasVoted, role) {
 								bold
 								size={20}
 								styles={{
-									paddingBottom: 20,
+									paddingBottom: 10,
+									paddingTop: 10,
 								}}
 							>
 								{item.fullNames}
+							</Text>
+							<Text
+								styles={{
+									textDecorationLine: "underline",
+								}}
+							>
+								Mission Statement
+							</Text>
+							<Text
+								styles={{
+									paddingBottom: 10,
+								}}
+							>
+								{item.missionStatement}
 							</Text>
 
 							{hasVoted && (
