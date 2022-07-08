@@ -22,23 +22,22 @@ export default function LoginScreen({ navigation }) {
 			password: "required",
 		});
 
+		data.login = data.email;
+
 		if (!passes) {
 			Alert.alert("Bad Request", info[0][0]);
 			return;
 		}
 
 		try {
-			let res = await post("api/auth/login", data);
+			let res = await post("api/auth/signin", data);
 
-			await SecureStore.setItemAsync("token", res.data.token);
+			await SecureStore.setItemAsync("token", res.data.message);
 			Alert.alert("Success", "Login Successful");
 			navigation.navigate("App");
 		} catch (error) {
 			if (error.response.status == 400) {
-				Alert.alert(
-					"Bad Request",
-					Object.values(error.response.data)[0][0]
-				);
+				Alert.alert("Bad Request", error.response.data.message);
 			} else {
 				Alert.alert("Invalid Credentials", "Invalid Credentials");
 			}

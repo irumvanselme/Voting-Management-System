@@ -21,7 +21,7 @@ export function Articles({ navigation }) {
 
 	async function getArticles() {
 		setIsFetching(true);
-		let data = await get("api/articles");
+		let data = await get("api/candidates");
 
 		setArticles(data.data.reverse(0));
 		setIsFetching(false);
@@ -38,6 +38,7 @@ export function Articles({ navigation }) {
 			navigation.push("Login");
 		} catch (error) {
 			console.log(error);
+			setIsFetching(false);
 		}
 	}
 
@@ -68,7 +69,7 @@ export function Articles({ navigation }) {
 									justifyContent: "center",
 								}}
 							>
-								<Text align="center">No more articles</Text>
+								<Text align="center">No more candidates</Text>
 							</View>
 						)}
 					/>
@@ -80,7 +81,7 @@ export function Articles({ navigation }) {
 					bottom: 20,
 					right: 20,
 					width: 70,
-					height: 180,
+					height: 130,
 					justifyContent: "space-between",
 					alignItems: "center",
 				}}
@@ -88,8 +89,8 @@ export function Articles({ navigation }) {
 				<View
 					style={{
 						backgroundColor: Colors.primary,
-						width: 40,
-						height: 40,
+						width: 50,
+						height: 50,
 						borderRadius: 25,
 						right: 0,
 						zIndex: 1,
@@ -110,9 +111,9 @@ export function Articles({ navigation }) {
 				<View
 					style={{
 						backgroundColor: Colors.primary,
-						width: 50,
-						height: 50,
-						borderRadius: 25,
+						width: 70,
+						height: 70,
+						borderRadius: 35,
 						right: 0,
 						zIndex: 1,
 						elevation: 10,
@@ -129,30 +130,6 @@ export function Articles({ navigation }) {
 						}}
 					>
 						<Feather name="user" size={24} color="white" />
-					</TouchableOpacity>
-				</View>
-				<View
-					style={{
-						backgroundColor: Colors.primary,
-						width: 70,
-						height: 70,
-						borderRadius: 35,
-						right: 0,
-						zIndex: 1,
-						elevation: 10,
-					}}
-				>
-					<TouchableOpacity
-						onPress={() => {
-							navigation.navigate("NewArticle");
-						}}
-						style={{
-							flex: 1,
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						<MaterialIcons name="add" size={30} color="white" />
 					</TouchableOpacity>
 				</View>
 			</View>

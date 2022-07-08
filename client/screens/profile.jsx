@@ -14,7 +14,7 @@ export function Profile() {
 			}}
 		>
 			<Text size={25} bold>
-				{authUser.names}
+				{authUser.fullNames}
 			</Text>
 			<Text
 				size={20}

@@ -87,13 +87,14 @@ function AppNavigator({ navigation }) {
 					options={{
 						headerLeft: null,
 						gestureEnabled: false,
+						title: "Candidates",
 					}}
 				/>
 				<Stack.Screen name="NewArticle" component={NewArticle} />
 				<Stack.Screen
 					name="ArticleDetails"
 					options={({ route }) => ({
-						title: `Reading ${route.params.item.title}`,
+						title: `Vote for ${route.params.item.fullNames}`,
 					})}
 					component={ArticleDetails}
 				/>

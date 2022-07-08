@@ -24,13 +24,13 @@ export function renderArticle(navigation) {
 				}}
 			>
 				<View style={{}}>
-					<Text bold>{item.title}</Text>
+					<Text bold>{item.fullNames}</Text>
 					<Text
 						styles={{
 							marginTop: 20,
 						}}
 					>
-						{item.summary}
+						{item.phoneNumber}
 					</Text>
 					<Text
 						size={15}
@@ -40,7 +40,17 @@ export function renderArticle(navigation) {
 							marginTop: 20,
 						}}
 					>
-						By {item._id}
+						{item.nationalId}
+					</Text>
+					<Text
+						size={15}
+						medium
+						color={Colors.primary}
+						style={{
+							marginTop: 20,
+						}}
+					>
+						{item.nationalId}
 					</Text>
 				</View>
 			</TouchableOpacity>
