@@ -23,6 +23,8 @@ public class RegisterDTO {
     @Email
     private String email;
 
+    private String address;
+
     @NotEmpty
     private String password;
 }

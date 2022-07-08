@@ -1,9 +1,12 @@
 package rw.ac.rca.nat2022.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +28,12 @@ public class Candidate {
     private String profilePicture;
 
     private String missionStatement;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "candidate")
+    private List<Voter> votes = new ArrayList<>();
+
+    public int getTotalVotes(){
+        return votes.size();
+    }
 }

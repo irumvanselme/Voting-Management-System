@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
 	FlatList,
 	SafeAreaView,
@@ -14,6 +14,7 @@ import { get } from "../utils/http";
 import { MaterialIcons, Feather, AntDesign } from "@expo/vector-icons";
 import { Colors } from "../utils/constants";
 import * as SecureStore from "expo-secure-store";
+import { AppContext } from "../contexts/app-context";
 
 export function Articles({ navigation }) {
 	const [articles, setArticles] = useState([]);
@@ -29,6 +30,22 @@ export function Articles({ navigation }) {
 
 	useEffect(() => {
 		getArticles();
+	}, []);
+
+	const [hasVoted_, setHasVoted] = useState(false);
+
+	const { authUser } = useContext(AppContext);
+
+	async function hasVoted() {
+		let res = await get("api/voters/" + authUser.id + "/has-voted");
+
+		return res.data == true;
+	}
+
+	useEffect(() => {
+		(async function () {
+			setHasVoted(await hasVoted());
+		})();
 	}, []);
 
 	async function logOut() {
@@ -60,7 +77,7 @@ export function Articles({ navigation }) {
 						style={{ height: 40 }}
 						showsVerticalScrollIndicator={false}
 						data={articles}
-						renderItem={renderArticle(navigation)}
+						renderItem={renderArticle(navigation, hasVoted_)}
 						onRefresh={getArticles}
 						ListFooterComponent={() => (
 							<View

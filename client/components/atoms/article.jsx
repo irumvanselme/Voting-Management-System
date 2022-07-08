@@ -1,8 +1,9 @@
-import { TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { Colors } from "../../utils/constants";
+import { Button } from "../theme/button";
 import Text from "../theme/text";
 
-export function renderArticle(navigation) {
+export function renderArticle(navigation, hasVoted) {
 	return function ({ item, index, separators }) {
 		return (
 			<TouchableOpacity
@@ -18,40 +19,58 @@ export function renderArticle(navigation) {
 					borderRadius: 10,
 					borderColor: "#eee",
 					borderWidth: 2,
-					paddingVertical: 20,
 					padding: 10,
 					backgroundColor: "white",
 				}}
 			>
-				<View style={{}}>
-					<Text bold>{item.fullNames}</Text>
-					<Text
-						styles={{
-							marginTop: 20,
-						}}
-					>
-						{item.phoneNumber}
-					</Text>
-					<Text
-						size={15}
-						medium
-						color={Colors.primary}
+				<View>
+					<View
 						style={{
-							marginTop: 20,
+							flexDirection: "row",
 						}}
 					>
-						{item.nationalId}
-					</Text>
-					<Text
-						size={15}
-						medium
-						color={Colors.primary}
-						style={{
-							marginTop: 20,
+						<View>
+							<Image
+								source={{
+									uri: item.profilePicture,
+								}}
+								style={{
+									width: 100,
+									height: 100,
+								}}
+							/>
+						</View>
+						<View
+							style={{
+								paddingLeft: 20,
+							}}
+						>
+							<Text bold>{item.fullNames}</Text>
+							<Text
+								styles={{
+									marginTop: 20,
+								}}
+							>
+								Phone number
+							</Text>
+							<Text size={15} medium color={Colors.primary}>
+								{item.phoneNumber}
+							</Text>
+							{hasVoted && (
+								<Text>Total Votes: {item.totalVotes}</Text>
+							)}
+						</View>
+					</View>
+				</View>
+				<View style={{ marginTop: 20 }}>
+					<Button
+						title={"More Details"}
+						onPress={() => {
+							navigation.navigate("ArticleDetails", {
+								item,
+							});
 						}}
-					>
-						{item.nationalId}
-					</Text>
+					/>
 				</View>
 			</TouchableOpacity>
 		);

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native";
 import { Button } from "../../components/theme/button";
 import { Input } from "../../components/theme/input";
 import Text from "../../components/theme/text";
@@ -14,14 +14,16 @@ export default function RegisterScreen({ navigation }) {
 	const [phoneNumber, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [nationalId, setNationalId] = useState("");
+	const [address, setAddress] = useState("");
 	const [password, setPassword] = useState("");
 
 	async function register() {
-		let data = { names, phoneNumber, nationalId, email, password };
+		let data = { names, phoneNumber, address, nationalId, email, password };
 
 		let [passes, info] = validate(data, {
 			names: "required",
 			email: "required|email",
+			address: "required|string",
 			phoneNumber: "required|string|min:9",
 			nationalId: "required|string|min:16|max:16",
 			password: "required",
@@ -35,7 +37,8 @@ export default function RegisterScreen({ navigation }) {
 		}
 
 		try {
-			await post("api/auth/register", data);
+			let res = await post("api/auth/register", data);
+			console.log(res.data);
 
 			Alert.alert("Success", "Registration Successful");
 			navigation.navigate("Login");
@@ -47,34 +50,42 @@ export default function RegisterScreen({ navigation }) {
 
 	return (
 		<Screen mt>
-			<View
-				style={{
-					marginTop: 20,
-				}}
-			>
-				<Text size={30} medium align="center" color={Colors.primary}>
-					Hello. have an account
-				</Text>
-			</View>
-			<View style={{ marginTop: 30 }}>
-				<Input label="Full names" handler={setFullNames} />
-				<Input label="Email" handler={setEmail} />
-				<Input label="phoneNumber" handler={setUsername} />
-				<Input label="National Id" handler={setNationalId} />
-				<Input label="Password" handler={setPassword} password />
-			</View>
-			<Button title="Create" onPress={register} />
-			<View>
-				<TouchableOpacity
-					onPress={() => {
-						navigation.navigate("Login");
+			<ScrollView>
+				<View
+					style={{
+						marginTop: 20,
 					}}
 				>
-					<Text align="center" color={Colors.primary}>
-						Already Have an account ?
+					<Text
+						size={30}
+						medium
+						align="center"
+						color={Colors.primary}
+					>
+						Hello. have an account
 					</Text>
-				</TouchableOpacity>
-			</View>
+				</View>
+				<View style={{ marginTop: 30 }}>
+					<Input label="Full names" handler={setFullNames} />
+					<Input label="Email" handler={setEmail} />
+					<Input label="Phone Number" handler={setUsername} />
+					<Input label="Address" handler={setAddress} />
+					<Input label="National Id" handler={setNationalId} />
+					<Input label="Password" handler={setPassword} password />
+				</View>
+				<Button title="Create" onPress={register} />
+				<View>
+					<TouchableOpacity
+						onPress={() => {
+							navigation.navigate("Login");
+						}}
+					>
+						<Text align="center" color={Colors.primary}>
+							Already Have an account ?
+						</Text>
+					</TouchableOpacity>
+				</View>
+			</ScrollView>
 		</Screen>
 	);
 }

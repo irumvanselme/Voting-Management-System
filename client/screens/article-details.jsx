@@ -1,18 +1,26 @@
-import { Alert, View } from "react-native";
+import { Alert, Image, View } from "react-native";
 import { Button } from "../components/theme/button";
 import Text from "../components/theme/text";
 import { Screen } from "../layouts/screen";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../contexts/app-context";
 import { get, post } from "../utils/http";
 
 export default function ArticleDetails({ navigation, route }) {
 	let item = route.params.item;
+	const [hasVoted_, setHasVoted] = useState(false);
 
 	const { authUser } = useContext(AppContext);
 
+	useEffect(() => {
+		(async function () {
+			setHasVoted(await hasVoted());
+		})();
+	}, []);
+
 	async function hasVoted() {
 		let res = await get("api/voters/" + authUser.id + "/has-voted");
+
 		return res.data == true;
 	}
 
@@ -37,6 +45,24 @@ export default function ArticleDetails({ navigation, route }) {
 
 	return (
 		<Screen>
+			<View>
+				<Image
+					source={{
+						uri: item.profilePicture,
+					}}
+					style={{
+						width: "100%",
+						height: 300,
+					}}
+				/>
+			</View>
+			<View
+				style={{
+					marginTop: 10,
+				}}
+			>
+				{hasVoted_ && <Text>Total Votes: {item.totalVotes}</Text>}
+			</View>
 			<Text
 				size={20}
 				bold
